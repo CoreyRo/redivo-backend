@@ -1,0 +1,110 @@
+{{> header }}
+
+    <div class="main-header-div">
+        <div class="container">
+            <div class="row  mx-auto">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="admin-header">
+                                <h3>GordonsBBQ.net Blog Control</h3> 
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="row mx-auto">
+                            <div class="col-12 header-text-p">
+                                <p>Welcome tho the backend interfacefor Gordons's BBQ Blog
+                                Here you can create, update, maintain and remove blog posts.</p>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                          
+                        </div>
+                        <div class="col-6">
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="admin-options">
+                        <h3 >Admin Controls</h3>
+                        <ul>
+                            <li>
+                                <form method="GET" action='/home'>
+                                     <button id="prevBtn" type="submit" class="admin-btn-normal"><p><i class="fas fa-home"></i> Return to home</p></button>
+                                </form>
+                            </li>
+                            <li>
+                                <form method='GET' action='/blog'>
+                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-newspaper"></i> Return to blogs</p></button>
+                                </form>
+                            </li>
+                            <li>
+                                <form method='GET' action='/logout'>
+                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-sign-out-alt"></i> Logout</p></button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="blog-div">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center mx-auto">
+                    <img class="img-fluid previewimg" src="/imgs/{{blog.img}}" alt="{{blog.img}}" id="{{img}}">
+                    <h6>Current Image: {{blog.img}}</h6>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6"><h4>Title</h4><h6>{{blog.title}}</h6></div>
+                        <div class="col-md-6"><h4>Date</h4><h6 id='dateh'>{{blog.updatedAt}}</h6></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <form action="/api/blog/edit/{{blog._id}}?_method=PUT" enctype="multipart/form-data" method="POST">
+                                <div class="form-group">
+                                    <label for="title">Blog title</label>
+                                    <input type="text" value='{{blog.title}}' class="form-control" id="title" name="title">
+                                </div>
+                                <div class="text-area-div">
+                                    <div class="form-group">
+                                        <label for="text">Blog text</label>
+                                        <textarea class="form-control" id="text" name='text' placeholder="ATTENTION: Leave blog blank if you do not want to change the text body!" rows="3"></textarea>
+                                        <input name="current_text" type='text' value='{{blog.text}}' id="current_text" hidden>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="imageURL">Blog image</label>
+                                    <div class="alert alert-secondary" role="alert">
+                                        <input type="file" name="imageURL" class="form-control-file" id="imageURL">
+                                        <input name="current_imageURL" type='text' value='{{blog.img}}' id="image-url" hidden>
+                                    </div>      
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class='text-left ml-auto'>
+                                            <button type="submit" class="admin-btn-normal-up"><p><i class="fas fa-plus-square"></i> Update blog post</p></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class='text-right mr-auto'>
+                                            <button type='none' data-toggle="modal" data-target="#exampleModalCenter" class="admin-btn-remove-up"><p><i class="fas fa-trash-alt"></i>  Remove this blog post</p></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+{{> alert }}
+{{> footer }}
+{{> footer-end }}

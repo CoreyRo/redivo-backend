@@ -1,0 +1,100 @@
+{{> header }}
+    <div class="main-header-div">
+        <div class="container">
+            <div class="row mx-auto">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="admin-header">
+                                <h3>GordonsBBQ.net Blog Control</h3>
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="row mx-auto">
+                            <div class="col-12 header-text-p">
+                                <p>Welcome tho the backend interface for Gordons's BBQ Blog
+                                Here you can create, update, maintain and remove blog posts.</p>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                          
+                        </div>
+                        <div class="col-6">
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="admin-options">
+                        <h3 >Admin Controls</h3>
+                        <ul>
+                            <li>
+                                <form method="GET" action='/home'>
+                                     <button id="prevBtn" type="submit" class="admin-btn-normal"><p><i class="fas fa-home"></i> Return to home</p></button>
+                                </form>
+                            </li>
+                            <li>
+                                <form method='GET' action='/blog'>
+                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-newspaper"></i> Return to blogs</p></button>
+                                </form>
+                            </li>
+                            <li>
+                                <form method='GET' action='/logout'>
+                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-sign-out-alt"></i> Logout</p></button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="blog-div">
+                <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center mx-auto">
+                    <img class="img-fluid previewimg" src="/imgs/gbbq1.png" alt="{{this.img}}" id="{{img}}">
+                    <h5>Image: <span class="preview-image"> default.jpg</span></h5>
+                </div>
+                <div class="col-md-8">
+                    <form action="/api/blog/create" enctype="multipart/form-data" method="POST">
+                        <div class="form-group">
+                            <label for="title">Blog title</label>
+                            <input type="text" class="form-control" id="title" name="title"placeholder="My new blog title" required>
+                        </div>
+                        <div class="text-area-div">
+                            <div class="form-group">
+                                <label for="text">Blog text</label>
+                                <textarea class="form-control" id="text" name='text' placeholder="My new blog text..." rows="3" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageURL">Blog image</label>
+                            <div class="alert alert-secondary" role="alert">
+                                <input type="file" name="imageURL" class="form-control-file" id="imageURL">
+                                <input name="default_imageURL" type='text' value='gbbq1.png' class="form-control-file" id="image-url" hidden>
+                            </div>      
+                        </div>
+                        <button type="submit" class="btn blog-submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bot-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                  
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{> alert}}
+{{> footer }}
