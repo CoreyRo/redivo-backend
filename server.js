@@ -22,14 +22,21 @@ const PORT = process.env.PORT || 3000
 const { _ } =require('underscore')
 
 
+// ******************************************************************************
+// *** Mongoose Setup
+// ==============================================================================
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_LOCALHOST || process.env.MONGODB_URI || process.env.MONGO_MLAB)
-
+mongoose.connect(process.env.MONOGDB_LOCALHOST || process.env.MONGO_MLAB)
+.catch(function(err){
+    console.log('mongoose connect error:', err.message)
+})
 // When successfully connected
 mongoose.connection.on('connected', function () {  
-  console.log(`Mongoose default connection open to ${process.env.MONGODB_LOCALHOST || process.env.MONGODB_URI || process.env.MONGO_MLAB}`);
+  process.env.NODE_ENV === 'production' ? 
+  console.log(`Mongoose default connection open to process.env.MONGO_MLAB`) 
+  : console.log(`Mongoose default connection open to process.env.MONGODB_LOCALHOST`);
 }); 
 // If the connection throws an error
 mongoose.connection.on('error',function (err) {  
@@ -40,12 +47,12 @@ mongoose.connection.on('disconnected', function () {
   console.log('Mongoose default connection disconnected'); 
 });
 // If the Node process ends, close the Mongoose connection 
-// process.on('SIGINT', function() {  
-// 	mongoose.connection.close(function () { 
-// 	  console.log('Mongoose default connection disconnected through app termination'); 
-// 	  process.exit(0); 
-// 	}); 
-// }); 
+process.on('SIGINT', function() {  
+	mongoose.connection.close(function () { 
+	  console.log('Mongoose default connection disconnected through app termination'); 
+	  process.exit(0); 
+	}); 
+}); 
 
 
 // ******************************************************************************
