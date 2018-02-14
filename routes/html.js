@@ -27,7 +27,7 @@ module.exports = function (router) {
                     console.log("Find Page Blog Post:\n", dbModel)
                     if (dbModel.docs.length <= 0) {
                         res.render('blog', {
-                            title: "The blog database is empty",
+                            title: "Blog Database is Empty",
                             subTitle: 'Click "Create a new blog post" to start',
                             username: req.user.username
                         })
@@ -35,7 +35,7 @@ module.exports = function (router) {
                         res.render('blog', {
                             blog: dbModel,
                             username: req.user.username,
-                            title: "Redivo Group Blog Entries",
+                            title: 'Blog Entries Page ' + dbModel.page + ' of ' + dbModel.pages,
                             pageTitle: "Redivo Group Blog Entries",
                         })
                     }

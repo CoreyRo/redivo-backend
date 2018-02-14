@@ -15,12 +15,12 @@ $(document).ready(function($){
       if( $('.main').hasClass('dumped')){
 
           $('#sidebar').on('shown.bs.collapse', function(){
-            $('.main').removeClass('dumped').addClass('col-md-9 float-left col px-5 pl-md-2 pt-2 main')
+            $('.main').removeClass('dumped').addClass('col-lg-10 float-left col px-5 pl-md-2 pt-2 main')
         })
       }
       else{
         $('#sidebar').on('hide.bs.collapse', function(){
-            $('.main').removeClass().addClass('main dumped')
+            $('.main').removeClass().addClass('main dumped px-5')
         })
 
       }

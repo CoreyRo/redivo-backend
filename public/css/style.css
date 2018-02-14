@@ -278,20 +278,22 @@ padding-bottom: 15px;
 	font-size: 16pt;
 }
 
-.fa-external-link-alt:hover{
-	color: #17d6c0
+.fa-external-link-alt{
+	color: #055cff;
 }
 
-.fa-trash-alt:hover{
-	color: #ff0000;
+.fa-external-link-alt:hover{
+	color: #0c9bee;
+
 }
+
 
 .fa-bars{
-	color: #0eae9b;
+	color: #d1d1d1;
 }
 
 .fa-bars:hover{
-	color: #09cab4;
+	color: #ffffff;
 }
 
 .blog-submit{

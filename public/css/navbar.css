@@ -90,6 +90,9 @@
     right: 2%;
     top:5%;
 }
+.container-fluid{
+
+}
 
 @media (max-width:770px) {
     #sidebar {
@@ -119,7 +122,7 @@
     display: none;
     }
     .container-fluid{
-        margin: 0 5% 0 3%;
+        margin: 5% 1% 0 1% !important;
     }
 
     #flex-wrap{

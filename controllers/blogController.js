@@ -53,13 +53,14 @@ module.exports = {
                 res.render('blog', {
                     title: "The blog database is empty",
                     subTitle: 'Click "Create a new blog post" to start',
-                    username: req.user.username
+                    username: req.user.username,
                 })
             }
             else{
                 res.render('blog', {
                     blog: dbModel,
-                    username: req.user.username
+                    title: 'Blog Entries Page ' + dbModel.page + ' of ' + dbModel.pages,
+                    username: req.user.username,
                 })
             }
 
