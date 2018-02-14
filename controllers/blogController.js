@@ -53,13 +53,13 @@ module.exports = {
                 res.render('blog', {
                     title: "The blog database is empty",
                     subTitle: 'Click "Create a new blog post" to start',
-                    user: req.user.username
+                    username: req.user.username
                 })
             }
             else{
                 res.render('blog', {
                     blog: dbModel,
-                    user: req.user.username
+                    username: req.user.username
                 })
             }
 
@@ -93,6 +93,9 @@ module.exports = {
                 console.log("Find All Blog Post:\n", dbModel)
                 res.render('blogpost', {
                     blog: dbModel,
+                    title: "Update Blog Post",
+                    pageTitle: "Redivo Group - Update Post",
+                    username: req.user.username
                     
                 })
             })

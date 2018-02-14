@@ -1,23 +1,98 @@
+
+{{> nav}}
+<div class="main-header-div">
+    <div class="container">
+        <div class="row  mx-auto">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="admin-header">
+                            <h3>The Redivo Group Blog Control</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-auto">
+                    <div class="col-12 header-text-p">
+                        <div class="col-12 header-text-p">
+                            <p>Welcome tho the backend interface for The Redivo Group Blog Here you can create, update, maintain
+                                and remove blog posts.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+
+                    </div>
+                    <div class="col-6">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="admin-options">
+                    <h3>Admin Controls</h3>
+                    <ul>
+                        <li>
+                            <form method="GET" action='/home'>
+                                <button id="prevBtn" type="submit" class="admin-btn-normal">
+                                    <p>
+                                        <i class="fas fa-home"></i> Return to home</p>
+                                </button>
+                            </form>
+                        </li>
+                        <li>
+                            <form method='GET' action='/newpost'>
+                                <button type="submit" class="admin-btn-normal">
+                                    <p>
+                                        <i class="fas fa-plus-square"></i> Create a new blog post</p>
+                                </button>
+                            </form>
+                        </li>
+                        <li>
+                            <form method='GET' action='/logout'>
+                                <button type="submit" class="admin-btn-normal">
+                                    <p>
+                                        <i class="fas fa-sign-out-alt"></i> Logout</p>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="container">
-    <div class="login-div">
+    <div class="register-div">
         <div class="header-div">
             <h1>{{title}}</h1>
             <h2>{{subTitle}}</h2>
-        </div>   
+        </div>
         <div class="row">
-            <div class="col-md-4">
-                <img class="img-fluid" src='./imgs/gbbq1.png' alt='log'>
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <form method='POST' action='/auth/create'>
                     <div class="form-group">
                         <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name='username' aria-describedby="userhelp" placeholder="Enter username">
+                        <input type="text" class="form-control" id="username" name='username' aria-describedby="userhelp" placeholder="Enter username">
                         <small id="userhelp" class="form-text text-muted">Never share your username with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">email</label>
+                        <input type="email" class="form-control" id="email" name='email' placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Confirm Email</label>
+                        <input type="matchEmail" class="form-control" id="matchEmail" name='matchEmail' placeholder="Confirm email">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name='password' placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="matchPassword">Confirm Password</label>
+                        <input type="matchPassword" class="form-control" id="matchPassword" name='matchPassword' placeholder="matchPassword">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -26,5 +101,5 @@
     </div>
 </div>
 <div class="container">
-    
+
 </div>

@@ -19,7 +19,9 @@ const MongoStore = require('connect-mongo')(session);
 const env = require('dotenv').load();
 const app = express();
 const PORT = process.env.PORT || 3000
-const { _ } =require('underscore')
+const {
+	_
+} = require('underscore')
 
 
 // ******************************************************************************
@@ -29,73 +31,78 @@ const { _ } =require('underscore')
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONOGDB_LOCALHOST || process.env.MONGO_MLAB)
-.catch(function(err){
-    console.log('mongoose connect error:', err.message)
-})
+	.catch(function (err) {
+		console.log('mongoose connect error:', err.message)
+	})
 // When successfully connected
-mongoose.connection.on('connected', function () {  
-  process.env.NODE_ENV === 'production' ? 
-  console.log(`Mongoose default connection open to process.env.MONGO_MLAB`) 
-  : console.log(`Mongoose default connection open to process.env.MONGODB_LOCALHOST`);
-}); 
+mongoose.connection.on('connected', function () {
+	process.env.NODE_ENV === 'production' ?
+		console.log(`Mongoose default connection open to process.env.MONGO_MLAB`) :
+		console.log(`Mongoose default connection open to process.env.MONGODB_LOCALHOST`);
+});
 // If the connection throws an error
-mongoose.connection.on('error',function (err) {  
-  console.log(`Mongoose default connection error: ${err}`);
-}); 
+mongoose.connection.on('error', function (err) {
+	console.log(`Mongoose default connection error: ${err}`);
+});
 // When the connection is disconnected
-mongoose.connection.on('disconnected', function () {  
-  console.log('Mongoose default connection disconnected'); 
+mongoose.connection.on('disconnected', function () {
+	console.log('Mongoose default connection disconnected');
 });
 // If the Node process ends, close the Mongoose connection 
-process.on('SIGINT', function() {  
-	mongoose.connection.close(function () { 
-	  console.log('Mongoose default connection disconnected through app termination'); 
-	  process.exit(0); 
-	}); 
-}); 
+process.on('SIGINT', function () {
+	mongoose.connection.close(function () {
+		console.log('Mongoose default connection disconnected through app termination');
+		process.exit(0);
+	});
+});
 
 
 // ******************************************************************************
 // *** setup express-handlebars instance
 // ==============================================================================
 var hbs = exphbs.create({
-	defaultLayout:'main',
-  	// Specify helpers which are only registered on this instance.
-  	helpers: {
-		foo: function () { return 'FOO!'; },
-		bar: function () { return 'BAR!'; },
-		everyNth: function(context, every, options){
-			var fn = options.fn, inverse = options.inverse;
+	defaultLayout: 'main',
+	// Specify helpers which are only registered on this instance.
+	helpers: {
+		foo: function () {
+			return 'FOO!';
+		},
+		bar: function () {
+			return 'BAR!';
+		},
+		everyNth: function (context, every, options) {
+			var fn = options.fn,
+				inverse = options.inverse;
 			var ret = "";
-			if(context && context.length > 0) {
-			  for(var i=0, j=context.length; i<j; i++) {
-				var modZero = i % every === 0;
-				ret = ret + fn(_.extend({}, context[i], {
-				  isModZero: modZero,
-				  isModZeroNotFirst: modZero && i > 0,
-				  isLast: i === context.length - 1
-				}));
-			  }
+			if (context && context.length > 0) {
+				for (var i = 0, j = context.length; i < j; i++) {
+					var modZero = i % every === 0;
+					ret = ret + fn(_.extend({}, context[i], {
+						isModZero: modZero,
+						isModZeroNotFirst: modZero && i > 0,
+						isLast: i === context.length - 1
+					}));
+				}
 			} else {
-			  ret = inverse(this);
+				ret = inverse(this);
 			}
 			return ret;
 		},
-		showPrev: function(page, pages, options){
+		showPrev: function (page, pages, options) {
 			console.log("page", page)
 			console.log("pages", pages)
-			if(page <= pages && page > 1){
+			if (page <= pages && page > 1) {
 				return `<div style="text-align:right;"><form method="GET" action=/api/blog/getpages/${page - 1}><button id="prevBtn" type="submit" class="btn btn-primary btn-sm">PREV</button></form></div>`
-			}			
+			}
 		},
-		showNext: function(page, pages, options){
-			if(page < pages){
+		showNext: function (page, pages, options) {
+			if (page < pages) {
 				return `<div style="text-align:left;"><form method="GET" action=/api/blog/getpages/${page + 1}><button id="nextBtn" type="submit" class="btn btn-primary btn-sm">NEXT</button></form></div>`
 			}
 
 		}
 
-  	}
+	}
 });
 
 // view engine setup
@@ -112,28 +119,30 @@ const partialsDir = __dirname + '/views/partials';
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+	extended: false
+}));
 app.use(expressValidator())
 app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  	secret: process.env.SESSION_SECRET,
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	unset: 'destroy',
 	saveUninitialized: false,
-	store: new MongoStore({ 
+	store: new MongoStore({
 		mongooseConnection: mongoose.connection,
 		autoRemove: 'interval',
-      	autoRemoveInterval: 20 // In minutes. Default
-	}),	
-  	// cookie: { 
-		  
+		autoRemoveInterval: 20 // In minutes. Default
+	}),
+	// cookie: { 
+
 	// 	}
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
 	res.locals.isAuthenticated = req.isAuthenticated();
 	next()
 });
@@ -150,24 +159,23 @@ var authRoute = require('./auth/auth.js')(app, passport);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
 	next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 	// render the error page
 	res.status(err.status || 500);
-	res.render('error');
+	res.render('error', {title:'ERROR 404'});
 });
 
 
-app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT);
+app.listen(PORT, function () {
+	console.log("App listening on PORT " + PORT);
 });
-

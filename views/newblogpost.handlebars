@@ -1,63 +1,12 @@
-{{> header }}
-    <div class="main-header-div">
-        <div class="container">
-            <div class="row mx-auto">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="admin-header">
-                                <h3>The Redivo Group Blog Control</h3>
-                            </div>                        
-                        </div>
-                    </div>
-                    <div class="row mx-auto">
-                            <div class="col-12 header-text-p">
-                                <p>Welcome tho the backend interface for The Redivo Group Blog
-                                Here you can create, update, maintain and remove blog posts.</p>
-                            </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                          
-                        </div>
-                        <div class="col-6">
-                           
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="admin-options">
-                        <h3 >Admin Controls</h3>
-                        <ul>
-                            <li>
-                                <form method="GET" action='/home'>
-                                     <button id="prevBtn" type="submit" class="admin-btn-normal"><p><i class="fas fa-home"></i> Return to home</p></button>
-                                </form>
-                            </li>
-                            <li>
-                                <form method='GET' action='/blog'>
-                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-newspaper"></i> Return to blogs</p></button>
-                                </form>
-                            </li>
-                            <li>
-                                <form method='GET' action='/logout'>
-                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-sign-out-alt"></i> Logout</p></button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="blog-div">
-                <div class="container">
+{{> nav}}
+
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4 text-center mx-auto">
+                <div class="col-lg-4 text-center mx-auto">
                     <img class="img-fluid previewimg" src="/imgs/logo.png" alt="{{this.img}}" id="{{img}}">
                     <h5>Image: <span class="preview-image"> default.jpg</span></h5>
                 </div>
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <form action="/api/blog/create" enctype="multipart/form-data" method="POST">
                         <div class="form-group">
                             <label for="title">Blog title</label>
@@ -81,20 +30,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="bot-row">
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                  
-                </div>
-                <div class="col-6">
-
-                </div>
-            </div>
-        </div>
-    </div>
+ 
 
 {{> alert}}
-{{> footer }}
+{{footer }}

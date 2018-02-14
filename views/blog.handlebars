@@ -1,129 +1,55 @@
-{{> header }}
-
-    <div class="main-header-div">
-        <div class="container">
-            <div class="row  mx-auto">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="admin-header">
-                                <h3>The Redivo Group Blog Control</h3> 
-                            </div>                        
-                        </div>
-                    </div>
-                    <div class="row mx-auto">
-                        <div class="col-12 header-text-p">
-                            <div class="col-12 header-text-p">
-                                <p>Welcome tho the backend interface for The Redivo Group Blog
-                                Here you can create, update, maintain and remove blog posts.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                          
-                        </div>
-                        <div class="col-6">
-                           
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="admin-options">
-                        <h3 >Admin Controls</h3>
-                        <ul>
-                            <li>
-                                <form method="GET" action='/home'>
-                                     <button id="prevBtn" type="submit" class="admin-btn-normal"><p><i class="fas fa-home"></i> Return to home</p></button>
-                                </form>
-                            </li>
-                            <li>
-                                <form method='GET' action='/newpost'>
-                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-plus-square"></i> Create a new blog post</p></button>
-                                </form>
-                            </li>
-                            <li>
-                                <form method='GET' action='/logout'>
-                                    <button type="submit" class="admin-btn-normal"><p><i class="fas fa-sign-out-alt"></i> Logout</p></button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="blog-div">
-    {{#if title}}
-    <div class="container">
-        <div id='nores' class="row mx-auto text-center">
-            <div class="col-12">
-            <h1>{{title}}</h1>
-            <h2>{{subTitle}}</h2>
-            </div>
-        </div>
-    </div>
-    {{/if}}
-
+{{> nav}}
+<div class="container-fluid">
     {{#if blog}}
-
-        <div class="container">
-      
-                {{#everyNth blog.docs 3}}
-                    {{#if isModZeroNotFirst}}
-            
+        {{#everyNth blog.docs 3}}
+            {{#if isModZeroNotFirst}}
+                </div>
+            {{/if}}
+            {{#if isModZero}}
+                <div class="row card-deck">
+            {{/if}}
+            <div class="col-lg-4">     
+                <div class="card blog-card">
+                    <div class="row edit-row ml-auto">
+                        <div class="col-lg-12 text-right">
+                            <form method="GET" action='/api/blog/getone/{{this._id}}'>
+                                <button id="open-{{this._id}}" type="submit" class="icon-button"><i class="fas fa-external-link-alt"></i></button>
+                            </form>
                         </div>
-                    {{/if}}
-                    {{#if isModZero}}
-                        <div class="row card-deck">
-                    {{/if}}
-                    <div class="col-md-4">     
-             
-                        <div class="card blog-card">
-                            <div class="row edit-row ml-auto">
-                                <div class="col-md-12 text-right">
-                                    <form method="GET" action='/api/blog/getone/{{this._id}}'>
-                                        <button id="open-{{this._id}}" type="submit" class="icon-button"><i class="fas fa-external-link-alt"></i></button>
-                                    </form>
-                                </div>
-                            </div> 
-                            <img class="card-img-top img-fluid" src="/imgs/{{this.img}}" alt="{{this.img}}" id="{{img}}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{this.title}}</h5>
-                                <p class="card-text"></p>{{{this.text}}}</p>
-                            </div>
-                            <div class="card-footer">
-                                <p class="text-muted">{{this.updatedAt}}</p>
-                            </div>
-                        </div>
+                    </div> 
+                    <img class="card-img-top img-fluid" src="/imgs/{{this.img}}" alt="{{this.img}}" id="{{img}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-text"></p>{{{this.text}}}</p>
                     </div>
-                    {{#if isLast}}
-                        </div>
-                    {{/if}}
-                {{/everyNth}}
-            </div>
-        </div>
-    </div>
-    <div class="pagerow">
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    {{#showPrev blog.page blog.pages}}
-                    {{/showPrev}}
-                </div>
-                <div class="col-6">
-                    {{#showNext blog.page blog.pages}}
-                    {{/showNext}}
+                    <div class="card-footer">
+                        <p class="text-muted">{{this.updatedAt}}</p>
+                    </div>
                 </div>
             </div>
-            <div class="text-center">
-                <p>Page {{blog.page}} of {{blog.pages}}</p>
+            {{#if isLast}}
+                </div>
+            {{/if}}
+        {{/everyNth}}
+        <div class="page-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        {{#showPrev blog.page blog.pages}}
+                        {{/showPrev}}
+                    </div>
+                    <div class="col-6">
+                        {{#showNext blog.page blog.pages}}
+                        {{/showNext}}
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p>Page {{blog.page}} of {{blog.pages}}</p>
+                </div>
+            </div>
             </div>
         </div>
     {{/if}}
- </div>
+{{> alert}}
 
-
-
-    {{> alert}}
-    {{> footer }}
+   
