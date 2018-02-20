@@ -10,7 +10,8 @@ module.exports = function (router) {
                 res.render('login', {
                     title: 'The Redivo Group',
                     subTitle: 'Admin Access Level',
-                    pageTitle: "Login"
+                    pageTitle: "Login",
+                    error: req.flash('error')
                 })
             }
         })
@@ -36,7 +37,7 @@ module.exports = function (router) {
                             blog: dbModel,
                             username: req.user.username,
                             title: 'Blog Entries Page ' + dbModel.page + ' of ' + dbModel.pages,
-                            pageTitle: "Redivo Group Blog Entries",
+                            pageTitle: "Redivo Group Blog Entries"
                         })
                     }
                 })
@@ -49,6 +50,8 @@ module.exports = function (router) {
                 title: 'The Redivo Group',
                 errors: [
                     {
+                        alertType: 'danger',
+                        alertIcon: 'fas fa-exclamation-triangle',
                         msg: 'You must be logged in to view this page'
                     }
                 ],
@@ -69,6 +72,8 @@ module.exports = function (router) {
                 title: 'The Redivo Group',
                 errors: [
                     {
+                        alertType: 'danger',
+                        alertIcon: 'fas fa-exclamation-triangle',
                         msg: 'You must be logged in to view this page'
                     }
                 ],
@@ -90,10 +95,12 @@ module.exports = function (router) {
                 title: 'The Redivo Group',
                 errors: [
                     {
+                        alertType: 'danger',
+                        alertIcon: 'fas fa-exclamation-triangle',
                         msg: 'You must be logged in to view this page'
                     }
                 ],
-                pageTitle: "Login",
+                pageTitle: "Login"
             })
         }
     })
@@ -119,6 +126,8 @@ module.exports = function (router) {
                 title: 'The Redivo Group',
                 errors: [
                     {
+                        alertType: 'danger',
+                        alertIcon: 'fas fa-exclamation-triangle',
                         msg: 'You must be logged in to view this page'
                     }
                 ],
@@ -126,5 +135,25 @@ module.exports = function (router) {
             })
         }
     })
+
+    router.get('/forgot', function (req, res) {
+        (res.render('forgot', {
+            title: 'Forgot Password',
+            pageTitle: "Forgot Password",
+            subTitle: 'Enter the email address for your account',
+        }))
+
+    })
+
+    // router.get('/:token', function (req, res) {
+    //     console.log('req.params.token', req.params)
+    //     res.render('reset', {
+    //         title: 'Reset Password',
+    //         pageTitle: "Reset Password",
+    //         subTitle: 'Enter a new password',
+    //         token: req.params.token
+    //     })
+
+    // })
 
 }

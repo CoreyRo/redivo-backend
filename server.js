@@ -2,6 +2,7 @@
 
 const express = require('express');
 const exphbs = require('express-handlebars')
+const flash = require('express-flash');
 const methodOverride = require("method-override");
 const path = require('path');
 const fs = require('fs');
@@ -100,7 +101,8 @@ var hbs = exphbs.create({
 				return `<div style="text-align:left;"><form method="GET" action=/api/blog/getpages/${page + 1}><button id="nextBtn" type="submit" class="btn btn-primary btn-sm">NEXT</button></form></div>`
 			}
 
-		}
+		},
+
 
 	}
 });
@@ -140,12 +142,19 @@ app.use(session({
 
 	// 	}
 }))
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function (req, res, next) {
 	res.locals.isAuthenticated = req.isAuthenticated();
+	res.locals.currentUser = req.user;
+	res.locals.sessionFlashErr = req.session.flash.error;
+	delete req.session.flash.error;
 	next()
 });
+
+
+
 
 //routes
 

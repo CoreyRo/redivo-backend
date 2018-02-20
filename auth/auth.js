@@ -1,79 +1,46 @@
-
 const router = require("express").Router();
 const auth = require("../controllers/authController.js");
+const {check, validationResult} = require('express-validator/check');
+const {matchedData, sanitize} = require('express-validator/filter');
 
-module.exports = function(router, passport){
+module.exports = function (router, passport) {
 
     router
         .route("/auth/create")
         .post(auth.doRegister)
 
-    
-    router.post('/auth/login', passport.authenticate('local-signin', {
-            successRedirect: '/home',
-            failureRedirect: '/'
-            }
-        ))
+    router.post('/login', passport.authenticate('local-signin', {
+        successRedirect: '/home',
+        failureRedirect: '/',
+        failureFlash: true
+    }))
 
-    router.get('/logout', function(req,res){
-            req.logout()
-            req.session.destroy()           
-            res.redirect('/')
+    router.get('/logout', function (req, res) {
+        req.logout()
+        req
+            .session
+            .destroy()
+        res.redirect('/')
     })
+
+    router
+        .route('/forgot-login')
+        .post([
+            check('forgetEmail')
+                .isEmail()
+                .withMessage('must be an email')
+        ], auth.doForgot)
+
+    router
+        .route('/reset/:token')
+        .get(auth.doResetCheck)
+        .post([
+            check('password').exists(),
+            check('confirm', 'Passwords do not match, please try again')
+                .exists()
+                .custom((value, {req}) => value === req.body.password),
+            check('password', 'Password must be between 8-100 characters long').isLength({min: 6, max: 100}),
+            check('password', 'Password must include one lowercase character, one uppercase character, a number' +
+                    ', and a special character.').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[^a-zA-Z0-9]).{8,}$/, "i")
+        ], auth.doReset)
 }
-
-
-// router.post('/login', passport.authenticate(
-//     'local', {
-//     successRedirect: '/home',
-//     failureRedirect: '/'
-//     }
-// ))
-
-// passport.use(new LocalStrategy(
-//     function(username, password, done) {
-//             db.User
-//             .findOne({username})
-//             .then((user) =>{
-//                 if (!user){
-//                     console.log('No user found')
-//                     return done(null, false, { 
-//                         errors: [
-//                             {msg: 'No user found'}
-//                         ]  
-//                     })
-//                 }
-//                 else{
-//                     const hash = user.password
-//                     bcrypt.compare(password, hash, function(err,res){
-//                         if (res) {              
-//                             return done(null, user)
-//                         }
-//                         else{
-//                             return done(null, false)
-//                         }
-//                     })
-//                 }
-//             })
-//             .catch((err) =>{
-//                 console.log('login find username err:', err)
-//                 return done(err)
-//             })
-
-// }))
-
-
-// passport.serializeUser(function(user, done) {
-//     console.log("Serial us", user._id)
-//     done(null, user._id);
-//   });
-  
-//   passport.deserializeUser(function(id, done) {
-//     console.log("DEerial user_id", user._id)
-//     User.findById({_id: user._id }, function(err, user) {
-//         done(err, user);
-//     });
-//   });
-
-// }
-

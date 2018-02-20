@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 let date = new Date();
 
 const userSchema = new Schema({
-  username: { type: String, required: true},
+  username: { type: String, unique: true, required: true},
   password: { type: String, required: true },
-  dateAdded: { type: Date, default: Date.now }
-
+  email: { type: String, unique: true, required: true },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
+  isAdmin: { type: Boolean, default: false }
+},{
+  timestamps: true
 });
 const User = mongoose.model("User", userSchema);
 

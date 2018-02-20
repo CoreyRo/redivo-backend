@@ -1,0 +1,27 @@
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="login-div">
+                    {{>errors}}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-fluid" src='../imgs/logo.png' alt='log'>
+                        </div>
+                        <div class="col-md-8">
+                            <h2>{{pageTitle}}</h2>
+                            <form method='POST' action='/forgot-login'>
+                                <div class="form-group">
+                                    <label for="forgetEmail">Enter the email address for your account.</label>
+                                    <input type="email" class="form-control" id="forgetEmail" name='forgetEmail' placeholder="Enter email">
+                                </div>
+                                <button type="submit" class="btn btn-primary buttonL">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
