@@ -11,7 +11,7 @@ module.exports = function (router) {
                     title: 'The Redivo Group',
                     subTitle: 'Admin Access Level',
                     pageTitle: "Login",
-                    error: req.flash('error')
+                    error: req.flash('error'),
                 })
             }
         })
@@ -30,14 +30,16 @@ module.exports = function (router) {
                         res.render('blog', {
                             title: "Blog Database is Empty",
                             subTitle: 'Click "Create a new blog post" to start',
-                            username: req.user.username
+                            username: req.user.username,
+                            user: req.user
                         })
                     } else {
                         res.render('blog', {
                             blog: dbModel,
                             username: req.user.username,
                             title: 'Blog Entries Page ' + dbModel.page + ' of ' + dbModel.pages,
-                            pageTitle: "Redivo Group Blog Entries"
+                            pageTitle: "Redivo Group Blog Entries",
+                            user: req.user
                         })
                     }
                 })
@@ -65,7 +67,8 @@ module.exports = function (router) {
             res.render('home', {
                 title: "Logged in as: " + req.user.username,
                 pageTitle: 'Redivo Blog - Home',
-                username: req.user.username
+                username: req.user.username,
+                user: req.user
             })
         } else {
             res.render('login', {
@@ -88,7 +91,33 @@ module.exports = function (router) {
                 user: req.user.username,
                 title: "Create New Blog Entry",
                 pageTitle: "Redivo Group - New Blog Entry",
-                username: req.user.username
+                username: req.user.username,
+                user: req.user
+            })
+        } else {
+            res.render('login', {
+                title: 'The Redivo Group',
+                errors: [
+                    {
+                        alertType: 'danger',
+                        alertIcon: 'fas fa-exclamation-triangle',
+                        msg: 'You must be logged in to view this page'
+                    }
+                ],
+                pageTitle: "Login"
+            })
+        }
+    })
+
+    router.get('/change-password', function (req, res, next) {
+        if (req.isAuthenticated()) {
+            res.render('changepass', {
+                user: req.user.username,
+                title: "Change Password",
+                pageTitle: "Redivo Group - Change Password",
+                subTitle: 'Create a new password',
+                username: req.user.username,
+                user: req.user
             })
         } else {
             res.render('login', {
@@ -117,9 +146,10 @@ module.exports = function (router) {
         if (req.isAuthenticated()) {
             res.render('register', {
                 user: req.user.username,
-                title: "Register New Admin User",
+                title: "Register a new user",
                 pageTitle: "Redivo Group - Add User",
-                username: req.user.username
+                username: req.user.username,
+                user: req.user
             })
         } else {
             res.render('login', {

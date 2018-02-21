@@ -7,8 +7,12 @@
 	<title>{{pageTitle}}</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" href="apple-touch-icon.png"> -->
 	<!-- Place favicon.ico in the root directory -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css" integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw" crossorigin="anonymous">
 	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -31,7 +35,7 @@
                 <a class='list-group-item d-inline-block mobile-item' href="/edit-profile"><i class="fa fa-user fa-lg "></i> Edit Profile</a>
                 <a class="list-group-item d-inline-block mobile-item" href="/logout"><i class="fa fa-power-off fa-lg "></i> </span>Logout</a>
                 <li id='drop-down' class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.username}}</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class='dropdown-item' href="/edit-profile"><i class="fa fa-user fa-lg "></i> Edit Profile</a>
                         <a class="dropdown-item" href="/logout"><i class="fa fa-power-off fa-lg"></i> <span class="d-none d-md-inline"></span>Logout</a>
@@ -79,7 +83,8 @@
                             </span>
                         </li>
                     </a>
-                    <a class='list-group-item d-inline-block collapsed' href="/register-user">
+                    {{#if user.isAdmin}}
+                    <a class='list-group-item d-inline-block collapsed' href="/register">
                         <li class=" li-text">
                             <i class="fa fa-users fa-lg "></i> <span class="d-none d-md-inline">Register New User
                             </span>
@@ -91,6 +96,7 @@
                             </span>
                         </li>
                     </a>
+                    {{/if}}
                     <a class='list-group-item d-inline-block collapsed' href="/logout">
                         <li class=" li-text">
                             <i class="fa fa-power-off fa-lg "></i> <span class="d-none d-md-inline">Logout

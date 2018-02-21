@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt')
 const saltRounds = 10
+const {check, validationResult} = require('express-validator/check');
+const {matchedData, sanitize} = require('express-validator/filter');
 
 module.exports = function (passport, User) {
     var LocalStrategy = require('passport-local').Strategy;
@@ -8,49 +10,44 @@ module.exports = function (passport, User) {
         passReqToCallback: true // allows us to pass back the entire request to the callback
     }, function (req, username, password, done) {
 
-        bcrypt.hash(password, saltRounds, function (err, hash) {
-            User.create({
-                username: req.body.username.toLowerCase(),
-                password: hash,
-                email: req.body.email.toLowerCase(),
-                isAdmin: req.body.isAdmin,
-                passwordResetToken: null,
-                passwordResetExpire: null
-                })
-                .then(function (dbModel) {
-                    User
-                        .findOne({_id: dbModel._id})
-                        .then(function (dbResult) {
-                            console.log(`Logging in user: ${dbResult._id}`)
-                            req.login(dbResult, function (err) {
-                                if (err) {
-                                    return done(err)
-                                } else {
-                                    return done(null, dbResult)
-                                }
-                            })
-                        })
-                        .catch(function (err) {
-                            console.log("UserFound Error:\n", err)
-                            return done(err)
-                        })
-                })
-                .catch(function (err) {
-                    console.log("Create New User Error:\n", err)
-                    return done(err)
-                })
-        })
+        bcrypt
+            .hash(password, saltRounds, function (err, hash) {
+                User.create({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    username: req
+                        .body
+                        .username
+                        .toLowerCase(),
+                    password: hash,
+                    email: req
+                        .body
+                        .email
+                        .toLowerCase(),
+                    isAdmin: req.body.isAdmin,
+                    passwordResetToken: null,
+                    passwordResetExpire: null
+                    })
+                    .then(function (dbModel) {
+                        return done(null, dbModel)
+                    })
+                    .catch(function (err) {
+                        console.log("Create New User Error:\n", err)
+                        return done(null, false, req.flash('error', 'Create New User Error:\n",' + err))
+                    })
+            })
+
     }));
 
     passport.use('local-signin', new LocalStrategy({
         passReqToCallback: true // allows us to pass back the entire request to the callback
     }, function (req, username, password, done) {
         User
-            .findOne({username})
+            .findOne({username: username.toLowerCase()})
             .then((user) => {
                 if (!user) {
                     console.log('No user found')
-                    return done(null, false,  req.flash('error', 'Username not found'))
+                    return done(null, false, req.flash('error', 'Username not found'))
                 } else {
                     const hash = user.password
                     bcrypt.compare(password, hash, function (err, res) {
@@ -58,7 +55,7 @@ module.exports = function (passport, User) {
                             return done(null, user)
                         } else {
                             console.log("Pass do not match")
-                            return done(null, false,  req.flash('error', 'Password entered does not match our records.'))
+                            return done(null, false, req.flash('error', 'Password entered does not match our records.'))
 
                         }
                     })
@@ -72,12 +69,10 @@ module.exports = function (passport, User) {
 
     //serialze
     passport.serializeUser(function (user, done) {
-        console.log("req.session", req.session)
         done(null, user._id);
     });
     //deserialze
     passport.deserializeUser(function (id, done) {
-        console.log("req.session", req.session)
         User
             .findOne({_id: id})
             .then((res) => {

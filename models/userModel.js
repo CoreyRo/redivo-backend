@@ -3,9 +3,11 @@ const Schema = mongoose.Schema;
 let date = new Date();
 
 const userSchema = new Schema({
-  username: { type: String, unique: true, required: true},
-  password: { type: String, required: true },
   email: { type: String, unique: true, required: true },
+  username: { type: String, unique: true, required: true},
+  firstName: { type: String, unique: false, required: true},
+  lastName: { type: String, unique: false, required: true},
+  password: { type: String, unique: false, required: true },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
   isAdmin: { type: Boolean, default: false }

@@ -120,6 +120,29 @@ nav{
 	margin:0 !important;
 }
 
+.register-div .header-div{
+	border-left: 4px solid #0eae9b;
+	margin-bottom: 15px;
+	margin-top: 0px;
+
+}
+
+.register-div{
+	background-color: rgb(228, 228, 228);
+	padding: 15px;
+	color: rgb(0, 0, 0);
+	box-shadow: 3px 3px 2px #13131388;
+	border-radius: 4px;
+	margin:25px auto 15px auto;
+	min-width: 90%;
+}
+
+.register-div .header-div h1{
+	font-weight: bold;
+	padding-left: 5px;
+}
+
+
 
 /* ========== LOGIN SECTION ========= */
 
@@ -130,14 +153,14 @@ nav{
 	box-shadow: 3px 3px 2px #13131388;
 	border-radius: 4px;
 	position: absolute;
-	top: 100px;
-	margin:0 !important;
+	margin:25px auto 15px auto;
 }
 .reset-div .header-div h1{
 	color: #1f1f1f;
 	font-weight: bold;
 	
 }
+
 
 
 .login-div img{
@@ -368,6 +391,20 @@ padding-bottom: 15px;
 .mb-4, .my-4{
 	margin-bottom: 0 !important;
 }
+#passreq p{
+margin-bottom: 0px;
+}
+#passreq p{
+	margin-top: -19px;
+	margin-left: 19px;
+}
+
+#passrequire{
+	margin-bottom: -20px;
+}
+.reg-button{
+	margin-top: 5px;
+}
 
 
 
@@ -386,7 +423,6 @@ padding-bottom: 15px;
 		margin: 0 auto !important
 
 	}
-
 }
 
 @media screen and (max-width: 1270)  {
@@ -405,7 +441,6 @@ padding-bottom: 15px;
 		margin: 0 auto !important
 
 	}
-
 }
 
 @media screen and (max-width: 993)  {
@@ -423,8 +458,6 @@ padding-bottom: 15px;
 		margin: 0 auto !important
 
 	}
-	
-
 }
 
 @media screen and (max-width: 769px)  {
@@ -438,7 +471,13 @@ padding-bottom: 15px;
 	.mobile-item{
 		display: inline-block !important;
 	}
-
+	#passrequire{
+		padding: 1px 20px 1px 1px;
+		margin-left: 0px;
+	}
+	#passrequire ul{
+		margin-left: -40px;
+	}
 
 	.text-left{
 		text-align: center !important;
@@ -451,5 +490,7 @@ padding-bottom: 15px;
 		margin: 0 auto !important
 
 	}
+}
+@media screen and (max-width: 420)  {
 
 }

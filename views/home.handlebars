@@ -1,20 +1,18 @@
-<!doctype html>
 
-{{> nav}}
-       
-        <div class="home-div">
-            <div class="container">
+<div class="home-div">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 mx-auto text-center">
+                <div class="row ">
+                    <h1 class="welcomeh1">Welcome your blog control interface</h1>
+                </div>
                 <div class="row">
-                    <div class="col-10 mx-auto text-center">
-                        <div class="row ">
-                            <h1 class="welcomeh1">Welcome your blog control interface</h1>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <img src="./imgs/logo.png" alt="logo" class='img-fluid homeimg'>
-                            </div>                                   
-                        </div>
-                    </div>
+                    <div class="col-12 text-center">
+                        {{>errors }}
+                        <img src="./imgs/logo.png" alt="logo" class='img-fluid homeimg'>
+                    </div>                                   
                 </div>
             </div>
-        </div>   
+        </div>
+    </div>
+</div>   

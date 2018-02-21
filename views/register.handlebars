@@ -1,105 +1,105 @@
 
-{{> nav}}
-<div class="main-header-div">
+<div>
     <div class="container">
-        <div class="row  mx-auto">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="admin-header">
-                            <h3>The Redivo Group Blog Control</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mx-auto">
-                    <div class="col-12 header-text-p">
-                        <div class="col-12 header-text-p">
-                            <p>Welcome tho the backend interface for The Redivo Group Blog Here you can create, update, maintain
-                                and remove blog posts.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-
-                    </div>
-                    <div class="col-6">
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="admin-options">
-                    <h3>Admin Controls</h3>
-                    <ul>
-                        <li>
-                            <form method="GET" action='/home'>
-                                <button id="prevBtn" type="submit" class="admin-btn-normal">
-                                    <p>
-                                        <i class="fas fa-home"></i> Return to home</p>
-                                </button>
-                            </form>
-                        </li>
-                        <li>
-                            <form method='GET' action='/newpost'>
-                                <button type="submit" class="admin-btn-normal">
-                                    <p>
-                                        <i class="fas fa-plus-square"></i> Create a new blog post</p>
-                                </button>
-                            </form>
-                        </li>
-                        <li>
-                            <form method='GET' action='/logout'>
-                                <button type="submit" class="admin-btn-normal">
-                                    <p>
-                                        <i class="fas fa-sign-out-alt"></i> Logout</p>
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
+        <div class="row">
     <div class="register-div">
         <div class="header-div">
             <h1>{{title}}</h1>
-            <h2>{{subTitle}}</h2>
+            {{>errors }}
+            <p>{{req.username}}</p>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <form method='POST' action='/auth/create'>
-                    <div class="form-group">
+                <form id='regForm' method='POST' action='/auth/create'>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id='firstName' name='firstName' placeholder="First name" value='{{req.firstName}}'>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id='lastName' name='lastName' placeholder="Last name" value='{{req.lastName}}'>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name='email' placeholder="Enter an email address" value='{{req.email}}'>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="confirmEmail">Confirm Email</label>
+                            <input type="email" class="form-control" id="confirmEmail" name='confirmEmail' placeholder="Confirm email address" value=''> 
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name='username' aria-describedby="userhelp" placeholder="Enter username">
-                        <small id="userhelp" class="form-text text-muted">Never share your username with anyone else.</small>
+                        <input type="text" class="form-control" id="username" name='username' placeholder="Enter username" value='{{req.username}}'>
+                        </div>
+                        <div class="col-md-6">
+                    <label for="roleSelect">Select a user role</label>
+                    <div class="form-group" name='roleSelect'>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="isAdmin" id="regular" value=false checked>
+                            <label class="form-check-label" for="regular">Basic User</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="isAdmin" id="admin" value=true>
+                            <label class="form-check-label" for="admin">Admin User</label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">email</label>
-                        <input type="email" class="form-control" id="email" name='email' placeholder="Email">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Confirm Email</label>
-                        <input type="matchEmail" class="form-control" id="matchEmail" name='matchEmail' placeholder="Confirm email">
-                    </div>
-                    <div class="form-group">
+
+                    <div class="form-row">
+                        <div class="col-md-6">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name='password' placeholder="Password">
+                        <input type="password" class="form-control" id="password" name='password' aria-describedby="passrequire" placeholder="Enter password">
+                        <small id="passrequire" class="form-text text-muted">Password must include at least one:
+                            <div class="row ml-auto">
+                                <ul id='passreq'>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>lowercase character [ a - z ]</p>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>uppercase character [ A - Z ]</p>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>numeric character [ 0 - 9 ]</p>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>special character ~`!@#$%^&*()-_+={}[]|\;:"
+                                            <>,./?</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </small>
+                        </div>
+                        <div class="col-md-6">
+                        <label for="confirmPass">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPass" name='confirmPass' placeholder="Confirm password">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="matchPassword">Confirm Password</label>
-                        <input type="matchPassword" class="form-control" id="matchPassword" name='matchPassword' placeholder="matchPassword">
+
+                    <div class="form-row">
+                        <div class="col text-right">
+                            <button id='regClear' type='reset' class="btn btn-danger clearForm reg-button">Clear</button>
+                        </div>
+                        <div class="col text-left">
+                            <button type="submit" class="btn btn-primary reg-button">Submit</button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
     </div>
+    </div>
+    </div>
 </div>
-<div class="container">
 
-</div>

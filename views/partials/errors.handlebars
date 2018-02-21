@@ -8,9 +8,17 @@
         </div>
     {{/each}}
 {{/if}}
-{{#if sessionFlashErr}}
+{{#if flash.error}}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong><i class="fas fa-exclamation-triangle"></i> {{sessionFlashErr}}</strong>
+            <strong><i class="fas fa-exclamation-triangle"></i> {{flash.error}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+{{/if}}
+{{#if flash.success}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong><i class="fas fa-check"></i> {{flash.success}}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
