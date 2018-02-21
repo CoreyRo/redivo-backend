@@ -94,16 +94,16 @@ var hbs = exphbs.create({
             }
             return ret;
         },
-        showPrev: function (page, pages, options) {
+        showPrev: function (page, pages, type, options) {
             console.log("page", page)
             console.log("pages", pages)
             if (page <= pages && page > 1) {
-                return `<div style="text-align:right;"><form method="GET" action=/api/blog/getpages/${page - 1}><button id="prevBtn" type="submit" class="btn btn-primary btn-sm">PREV</button></form></div>`
+                return `<div style="text-align:right;"><form method="GET" action=/${type}/getpages/${page - 1}><button id="prevBtn" type="submit" class="btn btn-primary btn-sm">PREV</button></form></div>`
             }
         },
-        showNext: function (page, pages, options) {
+        showNext: function (page, pages, type, options) {
             if (page < pages) {
-                return `<div style="text-align:left;"><form method="GET" action=/api/blog/getpages/${page + 1}><button id="nextBtn" type="submit" class="btn btn-primary btn-sm">NEXT</button></form></div>`
+                return `<div style="text-align:left;"><form method="GET" action=/${type}/getpages/${page + 1}><button id="nextBtn" type="submit" class="btn btn-primary btn-sm">NEXT</button></form></div>`
             }
 
         }

@@ -10,6 +10,7 @@ const blogSchema = new Schema({
 },{
   timestamps: true
 });
+
 blogSchema.plugin(mongoosePaginate);
 const Blog = mongoose.model("Blog", blogSchema);
 

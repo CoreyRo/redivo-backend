@@ -24,7 +24,7 @@
     <nav class="navbar top-bar navbar-expand-lg navbar-dark bg-dark">
         <a href="#" data-target="#sidebar" data-toggle="collapse" id='collapse-bars'><i class="fa fa-bars fa-lg fa-3x py-2 p-1"></i></a>  
         <div class="navbar-brand">
-            <h5>{{title}}</h5>
+            <a href='/home'><h5>{{title}}</h5></a>
         </div>
         {{#if username}}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@
                     {{#if user.isAdmin}}
                     <a class='list-group-item d-inline-block collapsed' href="/register">
                         <li class=" li-text">
-                            <i class="fa fa-users fa-lg "></i> <span class="d-none d-md-inline">Register New User
+                            <i class="fa fa-user-plus fa-lg "></i> <span class="d-none d-md-inline">Register New User
                             </span>
                         </li>
                     </a>

@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <div class="users-div">
+        {{>errors }}
+        {{#if users.docs}} {{#each users.docs}}
+        <div class="row">
+            <div class="card" style="width: 100%;">
+                <div class="row edit-row ml-auto">
+                    <div class="col-lg-12 text-right">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="card-title">
+                                <i class="fas fa-user"></i>
+                                <strong>{{this.username}}</strong>
+                            </h4>
+                            <small class="card-subtitle mb-2 text-muted">
+                                <i class="fas fa-calendar-alt"></i> {{this.updatedAt}}</small>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                </div>
+                                <div class="col text-right">
+                                    <form method="GET" action='/users/{{this._id}}'>
+                                        <button id="open-{{this._id}}" type="submit" class="icon-button">
+                                            <i class="fas m-1 fa-edit fa-lg"></i>
+                                        </button>
+                                        <button id="remove-{{this._id}}" class='delete-btn icon-button' data-toggle="modal" data-target="#deletemodaluser{{this._id}}" type="submit">
+                                            <i class="fas m-1 fa-trash fa-lg"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <strong>
+                        <i class="fas fa-calendar-alt"></i> User information</strong>
+                    <ul class='user-list'>
+                        <li>
+                            <p>
+                                <i class="fas fa-tag"></i> {{this.firstName}} {{this.lastName}}</p>
+                        </li>
+                        <li>
+                            <p>
+                                <i class="fas fa-envelope"></i> {{this.email}}</p>
+                        </li>
+                        {{#if this.isAdmin}}
+                        <li>
+                            <p>
+                                <i class="fas fa-shield-alt"></i> Admin Role</p>
+                        </li>{{/if }} {{#unless this.isAdmin}}
+                        <li>
+                            <p>
+                                <i class="far fa-user-circle"></i> Basic Role</p>
+                        </li>{{/unless }}
+                    </ul>
+                </div>
+            </div>
+        {{>userAlert this}}
+        </div>
+        {{/each }}
+        <div class="page-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        {{#showPrev users.page users.pages type}} {{/showPrev}}
+                    </div>
+                    <div class="col-6">
+                        {{#showNext users.page users.pages type}} {{/showNext}}
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p>Page {{users.page}} of {{users.pages}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{{/if}} {{#unless users}}
+</div>
+</div>
+{{/unless}} 

@@ -9,7 +9,7 @@ module.exports = function(router){
 		.get(blog.findAll)
 
 	router
-		.route('/api/blog/getpages/:num')
+		.route('/blog/getpages/:num')
 		.get(blog.findPages)
 
 	router

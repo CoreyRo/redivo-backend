@@ -1,0 +1,40 @@
+<!-- Modal -->
+<div class="modal fade" id="passreqs" tabindex="-1" role="dialog" aria-labelledby="passreqsTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Password Requirements</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row ml-auto">
+            <strong>Password must include at least one:</strong>
+                                <ul id='passreq'>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>lowercase character [ a - z ]</p>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>uppercase character [ A - Z ]</p>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>numeric character [ 0 - 9 ]</p>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-check-circle"></i>
+                                        <p>special character [ ~`!@#$%^&*()-_+={}[]|\;:"
+                                            <>,./? ]</p>
+                                    </li>
+                                </ul>
+                            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

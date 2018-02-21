@@ -6,7 +6,6 @@
         <div class="header-div">
             <h1>{{title}}</h1>
             {{>errors }}
-            <p>{{req.username}}</p>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -57,28 +56,7 @@
                         <div class="col-md-6">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name='password' aria-describedby="passrequire" placeholder="Enter password">
-                        <small id="passrequire" class="form-text text-muted">Password must include at least one:
-                            <div class="row ml-auto">
-                                <ul id='passreq'>
-                                    <li>
-                                        <i class="far fa-check-circle"></i>
-                                        <p>lowercase character [ a - z ]</p>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-check-circle"></i>
-                                        <p>uppercase character [ A - Z ]</p>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-check-circle"></i>
-                                        <p>numeric character [ 0 - 9 ]</p>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-check-circle"></i>
-                                        <p>special character ~`!@#$%^&*()-_+={}[]|\;:"
-                                            <>,./?</p>
-                                    </li>
-                                </ul>
-                            </div>
+                        <small id="passrequire" class="form-text text-muted"><a class='modal-a' data-toggle="modal" data-target="#passreqs" >Password Requirements</a>
                         </small>
                         </div>
                         <div class="col-md-6">
@@ -86,7 +64,7 @@
                         <input type="password" class="form-control" id="confirmPass" name='confirmPass' placeholder="Confirm password">
                         </div>
                     </div>
-
+                    <hr>
                     <div class="form-row">
                         <div class="col text-right">
                             <button id='regClear' type='reset' class="btn btn-danger clearForm reg-button">Clear</button>
@@ -102,4 +80,5 @@
     </div>
     </div>
 </div>
+{{>passreq }}
 

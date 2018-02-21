@@ -22,15 +22,14 @@ module.exports = {
                 valErrors: errors.mapped(),
                 req: req.body
             }))
-        }
-        else{
+        } else {
             passport.authenticate('local-signup')(req, res, function () {
                 return res.json(req.user)
             })
         }
     },
 
-    registerUser: function(req, res, next){
+    registerUser: function (req, res, next) {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             return (res.render('register', {
@@ -39,27 +38,35 @@ module.exports = {
                 valErrors: errors.mapped(),
                 req: req.body
             }))
-        }
-        else{
+        } else {
             let password = req.body.password
-            let username = req.body.username.toLowerCase()
-            let email = req.body.email.toLowerCase()
+            let username = req
+                .body
+                .username
+                .toLowerCase()
+            let email = req
+                .body
+                .email
+                .toLowerCase()
             let firstName = req.body.firstName
             let lastName = req.body.lastName
             bcrypt.hash(password, saltRounds, (err, hash) => {
-                db.User.create({
-                    firstName: firstName,
-                    lastName: lastName,
-                    username: username,
-                    password: hash,
-                    email: email,
-                    isAdmin: req.body.isAdmin,
-                    passwordResetToken: null,
-                    passwordResetExpire: null
-                }).then(dbModel => {
-                    req.flash('success', 'New user was created.')
-                    res.redirect('/home')
-                })
+                db
+                    .User
+                    .create({
+                        firstName: firstName,
+                        lastName: lastName,
+                        username: username,
+                        password: hash,
+                        email: email,
+                        isAdmin: req.body.isAdmin,
+                        passwordResetToken: null,
+                        passwordResetExpire: null
+                    })
+                    .then(dbModel => {
+                        req.flash('success', 'New user was created.')
+                        res.redirect('/home')
+                    })
                     .catch(function (err) {
                         req.flash('error', 'There was a problem trying to register the new user')
                         res.redirect('/home')
@@ -68,7 +75,6 @@ module.exports = {
             })
         }
     },
-
 
     // Post /login
     doLogin: function (req, res) {
@@ -406,56 +412,141 @@ module.exports = {
             }
 
         })
+    },
+
+    usersPage: function (req, res) {
+        db
+            .Users
+            .paginate({}, {
+                page: parseInt(req.params.num),
+                limit: 3,
+                sort: ({updatedAt: -1})
+            })
+            .then(function (dbModel) {
+                console.log("Find Page user:\n", dbModel)
+
+                if (dbModel.docs.length <= 0) {
+                    res.render('user', {
+                        title: "The user database is empty",
+                        subTitle: 'Click "Create a new user post" to start',
+                        username: req.user.username
+                    })
+                } else {
+                    res.render('user', {
+                        users: dbModel,
+                        title: 'User Accounts Page ' + dbModel.page + ' of ' + dbModel.pages,
+                        username: req.user.username,
+                        user: req.user,
+                        type: 'users'
+                    })
+                }
+            })
+            .catch(function (err) {
+                console.log("Find Page user Post Error:\n", err)
+            })
+    },
+
+    update: function(req, res){
+        async.waterfall([
+
+            function (done) {
+                const errors = validationResult(req)
+                if (!errors.isEmpty()) {
+                    console.log("User", req.body)
+                    console.log("erros", errors.array())
+                    return (res.render('updateUser', {
+                        title: "Update user information",
+                        pageTitle: "Redivo Group - Update User",
+                        subTitle: 'Update user information',
+                        username: req.user.username,
+                        valErrors: errors.mapped(),
+                        user: req.user,
+                        users: req.body,
+                    }))
+                }
+                done()
+            },
+            function (done) {
+                db
+                    .User
+                    .findOne({username: req.user.username})
+                    .then(user => {
+                        let password = req.body.password
+                        let hash = req.user.password
+                        bcrypt.compare(password, hash, function (err, result) {
+                            if (result) {
+                                console.log("true")
+                                return done()
+
+                            } else {
+                                console.log("Pass do not match")
+                                req.flash('error', 'Password entered does not match our records.')
+                                res.redirect('/change-password')
+                            }
+                        })
+                    })
+            },
+
+            function(done){
+                db.User.findOneAndUpdate({_id: req.body._id},
+                {
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    username: req.body.username,
+                    email: req.body.email
+                })
+                .then(user => {
+                    req.flash('success', 'User information successfully updated.')
+                    res.redirect('/manage-users')
+                })
+                .catch(err => {
+                    req.flash('error', 'There was an error updating the user information.')
+                    res.redirect('/manage-users')
+                })
+            }
+        ])
+
+    },
+
+    findOne: function (req, res) {
+        console.log("in find one")
+        db
+            .User
+            .findOne({_id: req.params.id})
+            .then(function (dbModel) {
+                console.log("Find All Blog Post:\n", dbModel)
+                res.render('updateUser', {
+                    users: dbModel,
+                    title: "Update user information",
+                    pageTitle: "Redivo Group - Update User",
+                    subTitle: 'Update user information',
+                    username: req.user.username,
+                    user: req.user
+                })
+            })
+            .catch(function (err) {
+                req.flash('error', 'There was an error finding that user.')
+                res.redirect('/manage-users')
+            })
+    },
+
+
+
+    destroy: function (req, res) {
+        db
+            .User
+            .findOne({_id: req.params.id})
+            .then(function (dbModel) {
+                console.log("destroy Blog Post:\n", dbModel)
+                dbModel.remove()
+                req.flash('success', 'User account was successfully removed.')
+                res.redirect('/manage-users')
+            })
+            .catch(function (err) {
+                console.log("destroy Blog Post Error:\n", err)
+                req.flash('error', 'There was an error removing the account: ' + err)
+                res.redirect('/manage-users')
+            })
     }
-    //     bcrypt.compare(password, saltRounds, function (err, hash) {         let
-    // conditions = {             resetPasswordToken: req.params.token,
-    // resetPasswordExpires: {                 $gte: Date.now()             }  } db
-    //            .User             .findOneAndUpdate(conditions, { password: hash,
-    //                resetPasswordToken: null, resetPasswordExpire: null
-    //  })             .then(user => { console.log('user', user)                 if
-    // (!user) { res.render('login', {                        title: 'The Redivo
-    // Group',                    errors: [ {
-    // alertType: 'danger',          alertIcon: 'fas fa-exclamation-triangle',
-    // msg: 'Oops! Something went wrong.'                      }                 ],
-    //                  pageTitle: "Oops! Something went wrong."  })
-    // }                 done(null, user)             })     .catch(err =>
-    // console.log("update-pass err: ", err)) }) } function (done) {         let
-    // password = req.body.password bcrypt.hash(password, saltRounds, function (err,
-    // hash) {             let conditions = {                 resetPasswordToken:
-    // req.params.token, resetPasswordExpires: { $gte: Date.now()                 }
-    // }             db .User                 .findOneAndUpdate(conditions, {
-    // password: hash,             resetPasswordToken: null, resetPasswordExpire:
-    // null   })                 .then(user => {
-    // console.log('user', user)                     if (!user) {
-    // res.render('login', {       title: 'The Redivo Group',      errors: [
-    //                  { alertType: 'danger',           alertIcon: 'fas
-    // fa-exclamation-triangle',      msg: 'Oops! Something went wrong.' }        ],
-    //   pageTitle: "Oops! Something went wrong."                         })
-    //     } done(null, user)             })                 .catch(err =>
-    // console.log("update-pass err: ", err))         })     },     function (user,
-    // done) {         var smtpTransport = nodemailer.createTransport({ service:
-    // 'Gmail',             auth: {        user: 'backend.test.address@gmail.com',
-    //             pass: process.env.GMAIL_PW            }         });         var
-    // mailOptions = {         to: user.email,             from:
-    // 'backend.test.address@gmail.com', subject: 'Your password has been changed',
-    //           text: 'Hello,\n\nThis is a confirmation that the password for your
-    // account ' + user.email + ' has just been changed.\n'         };
-    // smtpTransport.sendMail(mailOptions, function (err) { console.log('mail
-    // sent');             done(err, 'done');             if (req.isAuthenticated())
-    // { res.render('home', {              title: 'The Redivo Group',
-    // errors: [       { alertIcon: 'fas fa-check',                     alertType:
-    // 'success',                            msg: 'Success! Your password has been
-    // changed.'                      }         ], pageTitle: "Home"
-    // })             } else { res.render('login', {                     title: 'The
-    // Redivo Group',   errors: [                 { alertIcon: 'fas fa-check',
-    // alertType: 'success',                            msg: 'Success! Your password
-    // has been changed.'                      }                     ],
-    // pageTitle: "Login"                 })             }         });     } ], err
-    // => {     if (err) {         console.log("forgot error: ", err)
-    // res.render('forgot', {         title: 'The Redivo Group', errors: [
-    // { alertType: 'danger',            alertIcon: 'fas fa-exclamation-triangle',
-    //               msg: 'Oops! Something went wrong. Please Re-enter your
-    // information.'   }             ], pageTitle: "Oops! Something went wrong." })
-    //        }     }) }
 
 }

@@ -1,0 +1,23 @@
+
+<!-- Modal -->
+<div class="modal fade" id="deletemodaluser{{this._id}}" tabindex="-1" role="dialog" aria-labelledby="deletemodaluserTitle{{this._id}}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 style='font-weight:bold;' class="modal-title" id="deletemodaluserLongTitle"><i style='color:red;' class="fas fa-exclamation-triangle"></i> Are you sure?</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style='color:rgb(0, 0, 0); font-weight:bold;'>Clicking <span style='color:red; font-weight:bold; text-decoration:underline;'>Delete</span> will permanently remove  <span style='color:rgb(33, 37, 253); font-weight:bold; font-size:14pt;'>{{this.username}}</span>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		<form method="POST" action='/users/destroy/{{this._id}}?_method=DELETE'>
+			<button type="submit" class="btn btn-danger">Delete</button>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>

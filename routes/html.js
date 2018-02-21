@@ -11,7 +11,7 @@ module.exports = function (router) {
                     title: 'The Redivo Group',
                     subTitle: 'Admin Access Level',
                     pageTitle: "Login",
-                    error: req.flash('error'),
+                    error: req.flash('error')
                 })
             }
         })
@@ -39,7 +39,8 @@ module.exports = function (router) {
                             username: req.user.username,
                             title: 'Blog Entries Page ' + dbModel.page + ' of ' + dbModel.pages,
                             pageTitle: "Redivo Group Blog Entries",
-                            user: req.user
+                            user: req.user,
+                            type: 'blog'
                         })
                     }
                 })
@@ -170,20 +171,65 @@ module.exports = function (router) {
         (res.render('forgot', {
             title: 'Forgot Password',
             pageTitle: "Forgot Password",
-            subTitle: 'Enter the email address for your account',
+            subTitle: 'Enter the email address for your account'
         }))
 
     })
 
-    // router.get('/:token', function (req, res) {
-    //     console.log('req.params.token', req.params)
-    //     res.render('reset', {
-    //         title: 'Reset Password',
-    //         pageTitle: "Reset Password",
-    //         subTitle: 'Enter a new password',
-    //         token: req.params.token
-    //     })
+    router.get('/manage-users', function (req, res, next) {
+        db.User
+        .paginate({}, {
+            page: 1,
+            limit: 3,
+            sort: ({updatedAt:-1}),
+        })
+        .then(function(dbModel){
+            console.log("Find Page user:\n", dbModel)
 
-    // })
+            if (dbModel.docs.length <= 0){
+                res.render('users', {
+                    title: "The user database is empty",
+                    subTitle: 'Click "Create a new user post" to start',
+                    username: req.user.username,
+                })
+            }
+            else{
+                res.render('users', {
+                    users: dbModel,
+                    title: 'User Accounts Page ' + dbModel.page + ' of ' + dbModel.pages,
+                    username: req.user.username,
+                    user: req.user,
+                    type: 'users'
+                })
+            }
+        })
+        .catch(function(err){
+            console.log("Find Page user Post Error:\n", err)
+        })
 
+    })
+    router.get('/edit-profile', function (req, res, next) {
+        if (req.isAuthenticated()) {
+            res.render('updateUser', {
+                users: req.user,
+                title: "Edit your information",
+                pageTitle: "Redivo Group - Edit information",
+                subTitle: 'Edit your information',
+                username: req.user.username,
+                user: req.user
+            })
+        } else {
+            res.render('login', {
+                title: 'The Redivo Group',
+                errors: [
+                    {
+                        alertType: 'danger',
+                        alertIcon: 'fas fa-exclamation-triangle',
+                        msg: 'You must be logged in to view this page'
+                    }
+                ],
+                pageTitle: "Login"
+            })
+        }
+    })
 }

@@ -1,0 +1,60 @@
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="register-div">
+                <div class="header-div">
+                    <h1>{{title}}</h1>
+                    {{>errors }}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id='regForm' method='POST' action='/users/update/{{users._id}}?_method=PUT'>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" class="form-control" id='firstName' name='firstName' placeholder="First name" value='{{users.firstName}}'>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" class="form-control" id='lastName' name='lastName' placeholder="Last name" value='{{users.lastName}}'>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name='email' placeholder="Enter an email address" value='{{users.email}}'>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="confirmEmail">Confirm Email</label>
+                                    <input type="email" class="form-control" id="confirmEmail" name='confirmEmail' placeholder="Confirm email address" value=''>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name='username' placeholder="Enter username" value='{{users.username}}'>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label for="password">Enter your password</label>
+                                <input type="password" class="form-control" id="password" name='password' aria-describedby="passusersuire" placeholder="Enter password">
+                            </div>
+                            <input type="text" class="form-control" id="_id" name='_id' value='{{users._id}}' hidden>
+                            <hr>
+                            <div class="form-row">
+                                <div class="col text-right">
+                                    <button id='regClear' type='reset' class="btn btn-danger clearForm reg-button">Clear</button>
+                                </div>
+                                <div class="col text-left">
+                                    <button type="submit" class="btn btn-primary reg-button">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

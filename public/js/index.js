@@ -5,7 +5,8 @@ $(document)
         let text = $('#current_text').val()
 
         $('#text').html(text)
-        $('.admin-btn-remove-up').on('click', function (e) {
+        $('.delete-btn').on('click', function (e) {
+            console.log("clicked")
             e.preventDefault()
         })
         // col-md-9 float-left col px-5 pl-md-2 pt-2 main
