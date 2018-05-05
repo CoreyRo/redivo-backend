@@ -1,11 +1,11 @@
-# gordonsbbq.net backend
+# redivo group backend
 Author: Corey Rodems
 
 This site is going to be a backend interface to add blog posts, pictures and other customizations to the main site
 
 ## Test Server
 
-[redivo-backend.herokuapp.com](https://redivo-backend.herokuapp.com/ 'https://gordonsbbq-backend.herokuapp.com/')
+[redivo-backend.herokuapp.com](https://redivo-backend.herokuapp.com/ 'redivo-backend.herokuapp.com/')
 backend testing remote logins
 ## Using
 - Node
